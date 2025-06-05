@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My First API call in AWS</title>
+       
+    <script>
+        // callAPI function that takes First Number and Second Number as parameters
+        var callAPI = (num1,num2)=>{            
+            var myHeaders = new Headers();            
+            myHeaders.append("Content-Type", "application/json");            
+            var raw = JSON.stringify({"num1":num1,"num2":num2});  
+			
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+			
+            //make API call 
+            fetch("PUT-YOUR-API-ENDPOINT-HERE", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+	
+</head>
+
+<body>
+    <h1>Addition Made Easy!</h1>
+	<form>
+        <label>First Number:</label>
+        <input type="text" id="num1"> <br></br>
+        <label> Second Number:</label>
+        <input type="text" id="num2"><br></br>
+             
+        <button type="button" onclick="callAPI(Number(getElementById('num1').value), Number(getElementById('num2').value))">CALCULATE</button>
+    </form>
+</body>
+</html>
