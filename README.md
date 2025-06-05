@@ -62,7 +62,3 @@ Diagramming Tool: Eraser.io
    ![image](https://github.com/user-attachments/assets/ae57d1b8-0be4-40f5-9be1-9c0268a5689b)
 
 
-
-
-
-![image](https://github.com/user-attachments/assets/5687ad79-c069-440b-8012-004df4bec813)
