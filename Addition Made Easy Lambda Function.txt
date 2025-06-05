@@ -1,0 +1,48 @@
+import json
+import uuid
+import boto3
+from decimal import Decimal
+from time import gmtime, strftime
+
+
+# Initialize DynamoDB client
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('sum_table')
+# store the current time in a human readable format in a variable
+now = strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+
+
+def lambda_handler(event, context):
+    try:
+        # Parse input parameters from event
+        num1 = Decimal(str(event['num1']))
+        num2 = Decimal(str(event['num2']))
+
+        # Calculate sum and store in result
+        result = num1 + num2
+
+        # Write to DynamoDB
+        table.put_item(
+            Item={
+                'Sum_Result': str(result),
+        		'First Number': num1,
+                'Second Number': num2,
+                'time': now
+                           
+            }
+        )
+        
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps({
+                'message': 'Sum calculated and stored',                             
+                'result': float(result)
+            })
+        }
+
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
